@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 style="color:#38bdf8;">🏀 Live Games</h1>
+
+<div style="
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+">
+
+{% for game in games %}
+    <div style="
+        background: #1e293b;
+        padding: 15px;
+        border-radius: 12px;
+        border-left: 4px solid #38bdf8;
+    ">
+
+        <h2 style="margin:0;">
+            {{ game.home_team }} vs {{ game.away_team }}
+        </h2>
+
+        <p style="color:#94a3b8;">
+            Status: {{ game.status }}
+        </p>
+
+        <div style="display:flex; justify-content:space-between; margin-top:10px;">
+            <div>
+                <strong>{{ game.home_team }}</strong>
+                <p style="font-size:22px;">{{ game.home_score }}</p>
+            </div>
+
+            <div>
+                <strong>{{ game.away_team }}</strong>
+                <p style="font-size:22px;">{{ game.away_score }}</p>
+            </div>
+        </div>
+
+    </div>
+{% endfor %}
+
+</div>
+
+{% endblock %}

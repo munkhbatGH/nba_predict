@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 style="color:#38bdf8;">🏀 Game Details</h1>
+<h2 style="color:#38bdf8;">{{ home_team }} 🆚 {{ away_team }}</h2>
+
+{% if home_players|length == 0 and away_players|length == 0 %}
+
+<div style="
+    background:#1e293b;
+    padding:20px;
+    border-radius:12px;
+    margin-top:20px;
+    text-align:center;
+">
+    <h2>⚠ Game not started</h2>
+    <p style="color:#94a3b8;">
+        Showing head-to-head history instead 👇
+    </p>
+</div>
+
+{% else %}
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
+
+    <!-- HOME -->
+    <div style="background:#1e293b; padding:15px; border-radius:12px;">
+        <h2>🏠 Home Team</h2>
+        {% for p in home_players %}
+        <div style="padding:8px; border-bottom:1px solid #334155;">
+            <strong>{{ p[5] }}</strong>
+            <p style="color:#94a3b8;">
+                PTS: {{ p[26] }} | REB: {{ p[20] }} | AST: {{ p[21] }}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- AWAY -->
+    <div style="background:#1e293b; padding:15px; border-radius:12px;">
+        <h2>✈ Away Team</h2>
+        {% for p in away_players %}
+        <div style="padding:8px; border-bottom:1px solid #334155;">
+            <strong>{{ p[5] }}</strong>
+            <p style="color:#94a3b8;">
+                PTS: {{ p[26] }} | REB: {{ p[20] }} | AST: {{ p[21] }}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endif %}
+
+<!-- 🆚 H2H ALWAYS VISIBLE -->
+<div style="
+    margin-top:30px;
+    background:#0f172a;
+    padding:20px;
+    border-radius:12px;
+">
+
+    <h2 style="color:#38bdf8;">🆚 Head-to-Head (This Season)</h2>
+
+    {% if h2h_games and h2h_games|length > 0 %}
+
+    <table style="width:100%; margin-top:15px; color:white;">
+
+        <tr style="color:#38bdf8;">
+            <th>Date</th>
+            <th>Matchup</th>
+            <th>Result</th>
+            <th>PTS</th>
+            <th>Game type</th>
+        </tr>
+
+        {% for g in h2h_games %}
+        <tr>
+            <td>{{ g.GAME_DATE }}</td>
+            <td>{{ g.MATCHUP }}</td>
+            <td>
+                <span class="{% if g.WL == 'W' %}win{% else %}loss{% endif %}">
+                    {{ g.WL }}
+                </span>
+            </td>
+            <td>{{ g.PTS }}</td>
+            <td>
+                {% if g.IS_PLAYOFF %}
+                <span style="color:orange;">🔥 Playoff</span>
+                {% else %}
+                <span style="color:gray;">Regular</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+        <p style="color:#94a3b8;">No H2H data found.</p>
+
+    {% endif %}
+
+</div>
+
+<!-- 📰 NEWS SECTION -->
+<div style="margin-top:30px; background:#0f172a; padding:20px; border-radius:12px;">
+
+    <h2 style="color:#38bdf8;">📰 Related News</h2>
+
+    {% if news and news|length > 0 %}
+
+        {% for n in news %}
+        <div style="margin-bottom:12px; padding:10px; background:#1e293b; border-radius:8px;">
+
+            <a href="{{ n.link }}" target="_blank" style="color:#38bdf8; text-decoration:none;">
+                {{ n.title }}
+            </a>
+
+            <p style="color:#94a3b8; font-size:12px;">
+                {{ n.published }}
+            </p>
+
+        </div>
+        {% endfor %}
+
+    {% else %}
+
+        <p style="color:#94a3b8;">No news found.</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

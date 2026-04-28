@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 style="color:#38bdf8;">{{ message }}</h1>
+
+<div class="card">
+  <h2>📡 API Routes</h2>
+  <p style="color:#94a3b8;">Click a route to explore data</p>
+
+  <div style="
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 15px;
+  ">
+    {% for route in routes %}
+      <a href="{{ route.path }}"
+        style="
+        display: block;
+        padding: 12px;
+        background: linear-gradient(135deg, #38bdf8, #2563eb);
+        color: white;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: bold;
+        text-align: center;
+        transition: transform 0.2s ease;
+        "
+        onmouseover="this.style.transform='scale(1.05)'"
+        onmouseout="this.style.transform='scale(1)'"
+      >
+        {{ route.path }}
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

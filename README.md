@@ -29,8 +29,10 @@
 
 ## POETRY
     - pip install poetry
+    - poetry env use python3.10
     - poetry init
-    - poetry add fastapi uvicorn nba_api pandas
+    - poetry add fastapi uvicorn nba_api pandas jinja2
+    - poetry run uvicorn app.main:app --reload --port 8000
 
 ## TOML
     - pip install .

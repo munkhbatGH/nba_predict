@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 style="color:#38bdf8;">🏀 NBA Schedule</h1>
+
+<div style="
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap:15px;
+    margin-top:20px;
+">
+
+{% for game in games %}
+
+<a href="/game/{{ game.game_id }}"
+   style="text-decoration:none; color:inherit;">
+
+    <div style="
+        background:#1e293b;
+        padding:16px;
+        border-radius:12px;
+        border-left:4px solid #38bdf8;
+        transition: transform 0.2s ease;
+    "
+    onmouseover="this.style.transform='scale(1.03)'"
+    onmouseout="this.style.transform='scale(1)'"
+    >
+
+        <!-- MATCHUP -->
+        <h3 style="margin:0; color:white;">
+            🏀 {{ game.matchup }}
+        </h3>
+
+        <!-- ARENA -->
+        <p style="margin:5px 0; color:#94a3b8;">
+            🏟 {{ game.arena }}
+        </p>
+
+        <!-- NETWORK -->
+        <p style="margin:5px 0; color:#94a3b8;">
+            📺 {{ game.network or "TBD" }}
+        </p>
+
+        <!-- TIME SECTION -->
+        <div style="
+            margin-top:10px;
+            background:#0f172a;
+            padding:10px;
+            border-radius:8px;
+            font-size:14px;
+        ">
+
+            <p style="margin:4px 0;">
+                🇺🇸 US (ET): {{ game.time.us }}
+            </p>
+
+            <p style="margin:4px 0;">
+                🇲🇳 Mongolia: {{ game.time.mongolia }}
+            </p>
+
+        </div>
+
+        <!-- CLICK HINT -->
+        <p style="margin-top:10px; color:#38bdf8; font-size:12px;">
+            👉 Click for game details
+        </p>
+
+    </div>
+
+</a>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

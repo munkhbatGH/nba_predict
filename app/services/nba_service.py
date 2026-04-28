@@ -1,9 +1,11 @@
-import datetime
-from http.client import HTTPException
+from datetime import datetime, timedelta
+# from http.client import HTTPException
+from fastapi import HTTPException
 from nba_api.stats.static import players
 from nba_api.stats.endpoints import playercareerstats
 import pandas as pd
 from nba_api.live.nba.endpoints import scoreboard
+from nba_api.stats.endpoints import scoreboardv2
 
 def get_player_by_name(name: str):
   all_players = players.get_players()
@@ -60,3 +62,21 @@ def get_live_games():
   except Exception as e:
     # Catch-all for any other errors
     raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+def get_tomorrow_games():
+  try:
+    tomorrow = datetime.now() + timedelta(days=1)
+    date_str = tomorrow.strftime("%m/%d/%Y")
+
+    games = scoreboardv2.ScoreboardV2(game_date=date_str)
+    data = games.get_dict()
+
+    results = []
+
+    for game in data['resultSets'][0]['rowSet']:
+      results.append(game)
+    print(results)
+    return results
+
+  except Exception as e:
+    raise HTTPException(status_code=500, detail=str(e))
